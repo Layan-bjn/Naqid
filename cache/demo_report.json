@@ -1,0 +1,292 @@
+{
+  "url": "http://localhost:8000/demo/broken_page.html",
+  "timestamp": "2026-10-28T13:45:00Z",
+  "screenshots": {
+    "desktop": "/screenshots/demo_desktop.png",
+    "mobile": "/screenshots/demo_mobile.png"
+  },
+  "signals": {
+    "desktop": {
+      "console_errors": [
+        "Uncaught ReferenceError: initAnalyticsAndPerformanceTracking is not defined at broken_page.html:289:7"
+      ],
+      "failed_requests": [
+        {
+          "url": "http://localhost:8000/static/non_existent_wireless_headphone_pro_max_99214.jpg",
+          "status": 404,
+          "error": "Failed to load resource: 404 Not Found"
+        }
+      ],
+      "broken_images": [
+        {
+          "src": "/static/non_existent_wireless_headphone_pro_max_99214.jpg",
+          "alt": ""
+        }
+      ],
+      "horizontal_overflow": false,
+      "overflow_details": null,
+      "clipped_elements": [
+        {
+          "selector": "button.cta-button-clipped",
+          "text": "تسوق الآن واستفد من العرض الترويجي الحصري لكافة الأجهزة",
+          "scrollWidth": 332,
+          "clientWidth": 110
+        }
+      ],
+      "small_touch_targets": [],
+      "missing_alt_images": [
+        {
+          "src": "data:image/svg+xml;utf8,<svg...",
+          "selector": ".card-1 img"
+        },
+        {
+          "src": "/static/non_existent_wireless_headphone_pro_max_99214.jpg",
+          "selector": ".card-2 img"
+        },
+        {
+          "src": "data:image/svg+xml;utf8,<svg...",
+          "selector": ".card-3 img"
+        },
+        {
+          "src": "data:image/svg+xml;utf8,<svg...",
+          "selector": ".card-4 img"
+        }
+      ],
+      "missing_form_labels": [
+        {
+          "name": "subscriber_name",
+          "type": "text",
+          "placeholder": ""
+        },
+        {
+          "name": "subscriber_email",
+          "type": "email",
+          "placeholder": ""
+        }
+      ]
+    },
+    "mobile": {
+      "console_errors": [
+        "Uncaught ReferenceError: initAnalyticsAndPerformanceTracking is not defined at broken_page.html:289:7"
+      ],
+      "failed_requests": [
+        {
+          "url": "http://localhost:8000/static/non_existent_wireless_headphone_pro_max_99214.jpg",
+          "status": 404,
+          "error": "Failed to load resource: 404 Not Found"
+        }
+      ],
+      "broken_images": [
+        {
+          "src": "/static/non_existent_wireless_headphone_pro_max_99214.jpg",
+          "alt": ""
+        }
+      ],
+      "horizontal_overflow": true,
+      "overflow_details": {
+        "scrollWidth": 992,
+        "clientWidth": 390
+      },
+      "clipped_elements": [
+        {
+          "selector": "button.cta-button-clipped",
+          "text": "تسوق الآن واستفد من العرض الترويجي الحصري لكافة الأجهزة",
+          "scrollWidth": 332,
+          "clientWidth": 110
+        }
+      ],
+      "small_touch_targets": [
+        {
+          "selector": "a.mini-action-btn[title='بحث']",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "selector": "a.mini-action-btn[title='السلة']",
+          "width": 20,
+          "height": 20
+        },
+        {
+          "selector": "a.mini-action-btn[title='حسابي']",
+          "width": 20,
+          "height": 20
+        }
+      ],
+      "missing_alt_images": [
+        {
+          "src": "data:image/svg+xml;utf8,<svg...",
+          "selector": ".card-1 img"
+        },
+        {
+          "src": "/static/non_existent_wireless_headphone_pro_max_99214.jpg",
+          "selector": ".card-2 img"
+        },
+        {
+          "src": "data:image/svg+xml;utf8,<svg...",
+          "selector": ".card-3 img"
+        },
+        {
+          "src": "data:image/svg+xml;utf8,<svg...",
+          "selector": ".card-4 img"
+        }
+      ],
+      "missing_form_labels": [
+        {
+          "name": "subscriber_name",
+          "type": "text",
+          "placeholder": ""
+        },
+        {
+          "name": "subscriber_email",
+          "type": "email",
+          "placeholder": ""
+        }
+      ]
+    }
+  },
+  "issues": [
+    {
+      "title": "تداخل شارة الخصم العائمة مع العنوان الرئيسي h1",
+      "category": "layout",
+      "severity": "critical",
+      "viewport": "desktop",
+      "description": "تم وضع شارة الخصم (overlapping-promo-badge) بإحداثيات مطلقة ثابتة، مما يتسبب في تغطية مباشرة للعنوان الرئيسي للواجهة ومنع المستخدم من قراءة رسالة المتجر الترويجية الأساسية.",
+      "location": "أعلى يمين قسم البطل (Hero Section)",
+      "suggested_fix": {
+        "language": "css",
+        "code": ".hero-container {\n  display: flex;\n  flex-direction: row-reverse;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 2rem;\n}\n\n.overlapping-promo-badge {\n  position: static;\n  margin-top: 1rem;\n  flex-shrink: 0;\n}",
+        "explanation": "إلغاء التموضع المطلق (position: absolute) واستبداله بتخطيط فليكس بوكس مرن يضمن وضع الشارة بجانب العنوان دون أي تداخل في كافة قياسات الشاشات."
+      },
+      "test_scenario": "def test_hero_badge_does_not_overlap_heading(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    heading_box = page.locator('.hero-content h1').bounding_box()\n    badge_box = page.locator('.overlapping-promo-badge').bounding_box()\n    assert heading_box and badge_box\n    # Verify no vertical overlap if they share horizontal span\n    overlap_x = max(0, min(heading_box['x'] + heading_box['width'], badge_box['x'] + badge_box['width']) - max(heading_box['x'], badge_box['x']))\n    overlap_y = max(0, min(heading_box['y'] + heading_box['height'], badge_box['y'] + badge_box['y'] + badge_box['height']) - max(heading_box['y'], badge_box['y']))\n    assert overlap_x == 0 or overlap_y == 0, 'Badge overlaps hero heading!'"
+    },
+    {
+      "title": "تجاوز أفقي غير مرغوب فيه على شاشات الهواتف الذكية",
+      "category": "responsive",
+      "severity": "critical",
+      "viewport": "mobile",
+      "description": "شبكة بطاقات المنتجات تستخدم عرضاً ثابتاً قدره 960px مما يكسر تجاوب الصفحة على الأجهزة المحمولة، متسبباً في ظهور شريط تمرير أفقي وقطع أجزاء من المحتوى خارج حدود الشاشة.",
+      "location": "شبكة المنتجات (overflowing-product-grid)",
+      "suggested_fix": {
+        "language": "css",
+        "code": ".overflowing-product-grid {\n  width: 100%;\n  max-width: 100%;\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));\n  gap: 1.5rem;\n  overflow-x: hidden;\n}",
+        "explanation": "تحويل الحاوية إلى شبكة تجاوبية تستخدم grid-template-columns مع minmax ليتم ترتيب البطاقات تلقائياً حسب عرض الشاشة دون فيضان أفقي."
+      },
+      "test_scenario": "def test_no_horizontal_scroll_on_mobile(page):\n    page.set_viewport_size({'width': 390, 'height': 844})\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    scroll_width = page.evaluate('() => document.documentElement.scrollWidth')\n    client_width = page.evaluate('() => document.documentElement.clientWidth')\n    assert scroll_width <= client_width, f'Horizontal overflow detected: {scroll_width}px > {client_width}px'"
+    },
+    {
+      "title": "خطأ برمجي غير معالج في الجافاسكريبت عند بدء التحميل",
+      "category": "functional",
+      "severity": "critical",
+      "viewport": "both",
+      "description": "الملف يستدعي دالة برمجية غير معرّفة initAnalyticsAndPerformanceTracking عند وقوع حدث DOMContentLoaded، مما يوقف تنفيذ سكريبتات الصفحة ويولد ReferenceError في الكونسول.",
+      "location": "الوسم <script> في نهاية الصفحة",
+      "suggested_fix": {
+        "language": "js",
+        "code": "window.addEventListener('DOMContentLoaded', function () {\n  try {\n    if (typeof initAnalyticsAndPerformanceTracking === 'function') {\n      initAnalyticsAndPerformanceTracking();\n    } else {\n      console.warn('Analytics module not loaded or initialized.');\n    }\n  } catch (err) {\n    console.error('Error during analytics setup:', err);\n  }\n});",
+        "explanation": "التحقق من وجود الدالة قبل استدعائها وتغليف العملية بكتلة try-catch لتفادي انهيار سكربتات العميل البرمجية."
+      },
+      "test_scenario": "def test_no_uncaught_console_errors(page):\n    errors = []\n    page.on('pageerror', lambda exc: errors.append(str(exc)))\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    assert len(errors) == 0, f'Found uncaught JS errors: {errors}'"
+    },
+    {
+      "title": "صورة منتج تالفة لا يمكن استعراضها (رمز 404)",
+      "category": "functional",
+      "severity": "high",
+      "viewport": "both",
+      "description": "بطاقة 'سماعات رأس لاسلكية' تطلب صورة عبر مسار غير موجود على الخادم (/static/non_existent_wireless_headphone_pro_max_99214.jpg)، مما يؤدي لظهور أيقونة الصورة المكسورة.",
+      "location": "بطاقة المنتج الثانية (card-2)",
+      "suggested_fix": {
+        "language": "html",
+        "code": "<img src=\"/static/headphones.jpg\"\n     alt=\"سماعات رأس لاسلكية احترافية\"\n     onerror=\"this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'120\\' height=\\'120\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'%2364748b\\' stroke-width=\\'1.5\\'><path d=\\'M3 18v-6a9 9 0 0 1 18 0v6\\'/><path d=\\'M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z\\'/></svg>';\">",
+        "explanation": "تحديث رابط الصورة إلى مسار معتمد وإضافة معالج احتياطي onerror لعرض صورة بديلة مناسبة في حال انقطاع الشبكة أو فقدان المورد."
+      },
+      "test_scenario": "def test_product_images_load_successfully(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    images = page.locator('.card-img-wrap img').all()\n    for idx, img in enumerate(images):\n        is_loaded = page.evaluate('(el) => el.complete && el.naturalWidth > 0', img.element_handle())\n        assert is_loaded, f'Image index {idx} failed to render or has broken source'"
+    },
+    {
+      "title": "حقول إدخال بيانات تفتقر إلى التسميات التوضيحية (Labels)",
+      "category": "accessibility",
+      "severity": "high",
+      "viewport": "both",
+      "description": "حقول الاسم والبريد الإلكتروني في نموذج الاشتراك لا تحتوي على عناصر <label> ولا سمات placeholder أو aria-label، مما يجعلها مجهولة تماماً لقارئات الشاشة وذوي الإعاقة البصرية.",
+      "location": "نموذج الاشتراك بالنشرة البريدية (newsletter-form)",
+      "suggested_fix": {
+        "language": "html",
+        "code": "<form class=\"newsletter-form\" onsubmit=\"return false;\">\n  <label for=\"subscriber-name\" class=\"sr-only\">الاسم الكامل</label>\n  <input id=\"subscriber-name\" type=\"text\" name=\"subscriber_name\" class=\"input-field\" placeholder=\"الاسم الكامل\">\n\n  <label for=\"subscriber-email\" class=\"sr-only\">البريد الإلكتروني</label>\n  <input id=\"subscriber-email\" type=\"email\" name=\"subscriber_email\" class=\"input-field\" placeholder=\"name@domain.com\">\n\n  <button type=\"submit\" class=\"submit-btn\">تأكيد الاشتراك</button>\n</form>",
+        "explanation": "إضافة عناصر label مع معرفات مطابقة id وتضمين سمات placeholder واضحة لضمان توافق النموذج التام مع معايير الوصول العالمية."
+      },
+      "test_scenario": "def test_form_inputs_have_accessible_labels(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    inputs = page.locator('.newsletter-form input').all()\n    for inp in inputs:\n        has_label = page.evaluate('''(el) => {\n            const id = el.id;\n            const hasForLabel = id ? !!document.querySelector(`label[for=\"${id}\"]`) : false;\n            const hasAria = el.getAttribute('aria-label') || el.getAttribute('aria-labelledby');\n            const hasPlaceholder = el.getAttribute('placeholder');\n            return !!(hasForLabel || hasAria || hasPlaceholder);\n        }''', inp.element_handle())\n        assert has_label, 'Input field lacks accessible label or placeholder'"
+    },
+    {
+      "title": "تباين لوني منخفض جداً لنص تنبيه الشحن (غير مقروء)",
+      "category": "accessibility",
+      "severity": "high",
+      "viewport": "both",
+      "description": "تم تنسيق نص الإعلان بلون رمادي فاتح جداً (#e5e7eb) فوق خلفية بيضاء (#ffffff)، محققاً نسبة تباين 1.2:1 فقط بينما الحد الأدنى المطلوب في معايير WCAG AA هو 4.5:1.",
+      "location": "صندوق التنبيهات أسفل زر البطل الرئيسي",
+      "suggested_fix": {
+        "language": "css",
+        "code": ".invisible-contrast-text {\n  color: #1e293b; /* تباين مرتفع يفوق 12:1 */\n  background-color: transparent;\n  font-size: 0.95rem;\n  font-weight: 600;\n}",
+        "explanation": "تغيير لون الخط إلى درجات الرمادي الداكن المعتمدة (#1e293b) لتحقيق تباين لوني مريح للعين ومتوافق تماماً مع إمكانية الوصول."
+      },
+      "test_scenario": "def test_announcement_text_contrast_ratio(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    color = page.evaluate(\"() => window.getComputedStyle(document.querySelector('.invisible-contrast-text')).color\")\n    # In broken page, color is rgb(229, 231, 235) which is too light for white background\n    assert color != 'rgb(229, 231, 235)', 'Text contrast is dangerously low!'"
+    },
+    {
+      "title": "قص نص زر الإجراء الرئيسي داخل حاوية ثابتة الأبعاد",
+      "category": "visual",
+      "severity": "medium",
+      "viewport": "desktop",
+      "description": "عنصر الزر الأساسي cta-button-clipped محدد بعرض 110px مع تفعيل overflow: hidden و white-space: nowrap، مما أدى إلى اقتطاع أكثر من 60% من نص الزر واختفاء بقية العبارة.",
+      "location": "زر الإجراء الرئيسي بقسم البطل (Hero Section)",
+      "suggested_fix": {
+        "language": "css",
+        "code": ".cta-button-clipped {\n  width: auto;\n  min-width: 180px;\n  height: auto;\n  min-height: 44px;\n  padding: 0.75rem 1.75rem;\n  white-space: normal;\n  overflow: visible;\n}",
+        "explanation": "إلغاء قيود العرض والارتفاع الثابتة والسماح للزر بالتمدد وفقاً لحجم النص الداخلي مع المحافظة على مساحات الحشو الجمالية."
+      },
+      "test_scenario": "def test_cta_button_text_not_clipped(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    is_clipped = page.evaluate(\"() => {\n        const btn = document.querySelector('.cta-button-clipped');\n        return btn.scrollWidth > btn.clientWidth;\n    }\")\n    assert not is_clipped, 'CTA button text is clipped by its bounding container!'"
+    },
+    {
+      "title": "أهداف النقر على الهواتف الذكية أقل بكثير من 44x44 بكسل",
+      "category": "responsive",
+      "severity": "medium",
+      "viewport": "mobile",
+      "description": "أزرار التحكم العلوية في الهواتف (البحث، السلة، الحساب) مصممة بأبعاد 20x20 بكسل، مما يصعب النقر عليها بواسطة الأصابع ويسبب أخطاء متكررة للمستخدمين.",
+      "location": "أزرار الترويسة السريعة (mobile-controls)",
+      "suggested_fix": {
+        "language": "css",
+        "code": ".mini-action-btn {\n  min-width: 44px;\n  min-height: 44px;\n  padding: 0.5rem;\n  font-size: 18px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 8px;\n}",
+        "explanation": "ترقية أبعاد العناصر القابلة للنقر إلى 44x44 بكسل للامتثال لتوصيات أبل وجوجل الخاصة بواجهات اللمس وتسهيل الاستخدام."
+      },
+      "test_scenario": "def test_mobile_touch_targets_minimum_size(page):\n    page.set_viewport_size({'width': 390, 'height': 844})\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    buttons = page.locator('.mini-action-btn').all()\n    for btn in buttons:\n        box = btn.bounding_box()\n        assert box['width'] >= 44 and box['height'] >= 44, f'Touch target too small: {box[\"width\"]}x{box[\"height\"]}'"
+    },
+    {
+      "title": "تفاوت عشوائي وغير متناسق في محاذاة وهوامش بطاقات المنتجات",
+      "category": "visual",
+      "severity": "medium",
+      "viewport": "desktop",
+      "description": "تستخدم بطاقات المنتجات قيم margin-top عشوائية (-12px, 0px, 38px, 18px) بالإضافة لمحاذاة متناقضة للنصوص والأزرار، مما يظهر الواجهة بمظهر غير منظم وهواة.",
+      "location": "بطاقات المنتجات الأربع في شبكة المعروضات",
+      "suggested_fix": {
+        "language": "css",
+        "code": ".card {\n  margin-top: 0 !important;\n  padding: 1.25rem !important;\n  display: flex;\n  flex-direction: column;\n  text-align: right !important;\n}\n\n.card .add-to-cart-btn {\n  margin-top: auto;\n  width: 100% !important;\n  float: none !important;\n}",
+        "explanation": "توحيد الهوامش والحشوات لجميع البطاقات واستخدام flex column لدفع زر الشراء دائماً لأسفل البطاقة بتناسق موحد ومحاذاة عربية صحيحة."
+      },
+      "test_scenario": "def test_product_cards_vertical_alignment(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    cards = page.locator('.overflowing-product-grid .card').all()\n    y_coords = [c.bounding_box()['y'] for c in cards]\n    # Verify all cards have identical top offset\n    assert len(set(y_coords)) == 1, f'Cards are misaligned vertically: {y_coords}'"
+    },
+    {
+      "title": "غياب وسوم النصوص البديلة (alt) عن جميع صور المتجر",
+      "category": "accessibility",
+      "severity": "medium",
+      "viewport": "both",
+      "description": "جميع عناصر <img> في بطاقات المنتجات لا تشتمل على خاصية alt، مما يحرم فاقدي البصر من معرفة المنتجات ويضعف تصدر المتجر في محركات البحث SEO.",
+      "location": "حاويات صور المنتجات (.card-img-wrap img)",
+      "suggested_fix": {
+        "language": "html",
+        "code": "<!-- مثال لإحدى بطاقات المنتجات مع وسم بديل معبر -->\n<img src=\"/static/smartwatch.png\" alt=\"ساعة رياضية ذكية مع شاشة أموليد لقياس المؤشرات الحيوية\">",
+        "explanation": "إضافة نصوص وصفية دقيقة توضح اسم ومواصفات المنتج داخل سمة alt لكل صورة في المتجر."
+      },
+      "test_scenario": "def test_all_images_have_alt_attribute(page):\n    page.goto('http://localhost:8000/demo/broken_page.html')\n    images = page.locator('img').all()\n    for img in images:\n        alt_val = img.get_attribute('alt')\n        assert alt_val is not None and len(alt_val.strip()) > 0, 'Image is missing alt attribute'"
+    }
+  ],
+  "summary": "أظهر فحص منصة 'متجر الأفق' وجود 10 مشكلات تصميمية ووظيفية حرجة، أبرزها فيضان أفقي يكسر تصفح الجوال، وتداخل عناصر الغلاف الترويجي مع العنوان الرئيسي، وأخطاء كونسول غير معالجة تعطل السكربتات، بالإضافة لقص نصوص أزرار الإجراء وغياب معايير إمكانية الوصول.",
+  "score": 42,
+  "duration_seconds": 6.84
+}

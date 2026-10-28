@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر الأفق | أحدث المنتجات التقنية وإكسسواراتها</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --dark-bg: #0f172a;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #f59e0b;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--surface-alt);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.75rem 2rem;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #2563eb, #6366f1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mini-action-btn {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      font-size: 11px;
+      line-height: 18px;
+      border: 1px solid var(--border);
+      background: #f1f5f9;
+      color: #475569;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .hero-wrapper {
+      position: relative;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+      padding: 4rem 2rem 3rem;
+      overflow: visible;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .overlapping-promo-badge {
+      position: absolute;
+      top: 15px;
+      right: 40px;
+      background: #dc2626;
+      color: #ffffff;
+      padding: 1.25rem 2rem;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+      z-index: 20;
+      max-width: 320px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      max-width: 720px;
+    }
+
+    .hero-content h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .cta-button-clipped {
+      width: 110px;
+      height: 42px;
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      display: inline-block;
+      text-overflow: clip;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .announcement-box {
+      margin-top: 1.5rem;
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+    }
+
+    .invisible-contrast-text {
+      color: #e5e7eb;
+      background-color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 3.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .overflowing-product-grid {
+      display: flex;
+      gap: 1.5rem;
+      width: 960px;
+      padding-bottom: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      flex: 0 0 220px;
+    }
+
+    .card-1 {
+      margin-top: 0;
+      padding: 1.25rem;
+    }
+
+    .card-2 {
+      margin-top: 38px;
+      padding: 0.4rem;
+      text-align: left;
+    }
+
+    .card-3 {
+      margin-top: -12px;
+      padding: 2.2rem 1rem 1rem;
+    }
+
+    .card-4 {
+      margin-top: 18px;
+      padding: 1rem;
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      height: 140px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+
+    .product-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .add-to-cart-btn {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      background: #0f172a;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .card-2 .add-to-cart-btn {
+      width: auto;
+      float: right;
+      background: #475569;
+    }
+
+    .newsletter-section {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      margin-top: 4rem;
+    }
+
+    .newsletter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #f8fafc;
+    }
+
+    .submit-btn {
+      background: #059669;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .inactive-action-btn {
+      margin-top: 1rem;
+      background: #4f46e5;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 2rem;
+      margin-top: 5rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <span>متجر الأفق</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#">الرئيسية</a></li>
+        <li><a href="#">الأجهزة الذكية</a></li>
+        <li><a href="#">الملحقات</a></li>
+        <li><a href="#">العروض الخاصة</a></li>
+      </ul>
+
+      <div class="mobile-controls">
+        <a href="#search" class="mini-action-btn" title="بحث">🔍</a>
+        <a href="#cart" class="mini-action-btn" title="السلة">🛒</a>
+        <a href="#account" class="mini-action-btn" title="حسابي">👤</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-wrapper">
+      <div class="hero-container">
+        
+        <div class="overlapping-promo-badge">
+          <h3>🔥 خصم حصري 50%</h3>
+          <p>استخدم كود التخفيض AFQ2026 قبل نفاد الكمية</p>
+        </div>
+
+        <div class="hero-content">
+          <h1>الجيل القادم من الإلكترونيات الذكية بين يديك</h1>
+          <p>اكتشف تشكيلة استثنائية من أحدث الحواسيب المحمولة والساعات الذكية والصوتيات بأفضل الأسعار وضمان شامل لمدة عامين.</p>
+          
+          <button class="cta-button-clipped">تسوق الآن واستفد من العرض الترويجي الحصري لكافة الأجهزة</button>
+
+          <div class="announcement-box">
+            <span class="invisible-contrast-text">ملاحظة للعملاء: الشحن والتوصيل مجاني لكافة محافظات المملكة للطلبات فوق 200 ريال</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">المنتجات الأكثر طلباً</h2>
+      </div>
+
+      <div class="overflowing-product-grid">
+        <div class="card card-1">
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.5'><rect x='2' y='3' width='20' height='14' rx='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/></svg>">
+          </div>
+          <h3 class="product-title">شاشة ألترا برو 4K</h3>
+          <div class="product-price">1,899 ر.س</div>
+          <button class="add-to-cart-btn">أضف إلى السلة</button>
+        </div>
+
+        <div class="card card-2">
+          <div class="card-img-wrap">
+            <img src="/static/non_existent_wireless_headphone_pro_max_99214.jpg">
+          </div>
+          <h3 class="product-title">سماعات رأس لاسلكية</h3>
+          <div class="product-price">649 ر.س</div>
+          <button class="add-to-cart-btn">أضف للسلة</button>
+        </div>
+
+        <div class="card card-3">
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='1.5'><circle cx='12' cy='12' r='7'/><polyline points='12 9 12 12 13.5 13.5'/><path d='M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83'/></svg>">
+          </div>
+          <h3 class="product-title">ساعة ذكية رياضية</h3>
+          <div class="product-price">420 ر.س</div>
+          <button class="add-to-cart-btn">أضف إلى السلة</button>
+        </div>
+
+        <div class="card card-4">
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='1.5'><rect x='5' y='2' width='14' height='20' rx='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg>">
+          </div>
+          <h3 class="product-title">هاتف لوحي متطور</h3>
+          <div class="product-price">2,499 ر.س</div>
+          <button class="add-to-cart-btn">أضف إلى السلة</button>
+        </div>
+      </div>
+
+      <div class="newsletter-section">
+        <div class="newsletter-grid">
+          <div>
+            <h3>انضم لنشرتنا البريدية</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">احصل على عروض حصرية وكوبونات تخفيض أسبوعية مباشرة إلى بريدك الإلكتروني.</p>
+            <button id="quick-checkout-btn" class="inactive-action-btn" onclick="void(0)">تفعيل كاش باك 10% فوراً</button>
+          </div>
+          
+          <form class="newsletter-form" onsubmit="return false;">
+            <input type="text" name="subscriber_name" class="input-field">
+            <input type="email" name="subscriber_email" class="input-field">
+            <button type="submit" class="submit-btn">تأكيد الاشتراك</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>© 2026 متجر الأفق للتقنية. جميع الحقوق محفوظة.</p>
+      <p>خدمة عملاء على مدار الساعة</p>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      initAnalyticsAndPerformanceTracking();
+    });
+  </script>
+</body>
+</html>

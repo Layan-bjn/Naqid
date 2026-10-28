@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# Screenshots runtime generated files (keep demo placeholders)
+screenshots/desktop_*.png
+screenshots/mobile_*.png
+
+# Playwright cache
+.playwright/
